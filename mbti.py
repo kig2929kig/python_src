@@ -1,5 +1,8 @@
 from tkinter import *
+from tkinter import messagebox
 
+t_count = 0
+f_count = 0
 
 ################################################################## MBTI 유형 ##################################################################
 t_category = ["나는 불공평한 것이 가장 나쁘다고 생각한다.", "나는 공부 잘하는 실력 있는 학생으로 인정받고 싶다.",
@@ -29,38 +32,73 @@ p_category = ["내가 할 수 있는 일이라면 먼저 재미있게 놀고 난
 ################################################################## MBTI 유형 ##################################################################
 
 def result() :
-    pass
+    global t_count, f_count, lbl_var
 
+    t_count = 0
+    f_count = 0
+    msg = "nothing selected"
+    if rd_btn1_var.get() == 1:
+        t_count = t_count + 1
+    if rd_btn1_var.get() == 2:
+        f_count = f_count + 1
+    if rd_btn2_var.get() == 1:
+        t_count = t_count + 1
+    if rd_btn2_var.get() == 2:
+        f_count = f_count + 1
+    if rd_btn3_var.get() == 1:
+        t_count = t_count + 1
+    if rd_btn3_var.get() == 2:
+        f_count = f_count + 1
+        
+    if t_count > f_count :
+        lbl_var.set("Result : I")
+    else :
+        lbl_var.set("Result : F")
+    #messagebox.showinfo("info", msg)
+    
 window = Tk()
 window.title("MBTI TEST by kig2929kig")
 window.geometry("600x600")
 window.resizable(False,False)
 
-scrollbar = Scrollbar(window, orient="vertical")
-scrollbar.pack(side="right", fill="y")
-
 
 ttl_lbl = Label(window, text="나의 성격 유형과 관련 직업", font=("Arial", 14, "bold"))
 ttl_lbl.pack(pady=10)
 
-frm1 = Frame(window, relief="ridge", bd=1, yscrollcommand=scrollbar.set)
-frm1.pack()
-scrollbar.config(command = frm1.yview)   
+frm1 = Frame(window, relief="ridge", bd=1, height=500)
+frm1.pack(padx=5, pady=5, fill="both")
 
-t_or_f_lblFrm = [] # t, f 유형의 질문이 들어갈 라벨프레임
-t_q = [] # t 유형의 질문
-f_q = [] # f 유형의 질문
+lblfrm1 = LabelFrame(frm1, text="1번")
+lblfrm1.pack(pady=5, fill="x")
 
-for i in range(5) :
-    v = 1
-    t_or_f_lblFrm.append(LabelFrame(frm1, text= str(i) +"번"))
-    t_or_f_lblFrm[i].pack(fill="x")                   
+rd_btn1_var = IntVar()
+rd_btn2_var = IntVar()
+rd_btn3_var = IntVar()
+rd_btn1 = Radiobutton(lblfrm1, text=t_category[0], variable=rd_btn1_var, value=1)
+rd_btn1.pack(anchor="w")
+rd_btn2 = Radiobutton(lblfrm1, text=f_category[0], variable=rd_btn1_var, value=2)
+rd_btn2.pack(anchor="w")
 
-    t_q.append(Radiobutton(t_or_f_lblFrm[i], text=t_category[i], value="i", command=result))
-    t_q[i].pack(anchor="w")
-    f_q.append(Radiobutton(t_or_f_lblFrm[i], text=f_category[i], value="f", command=result))
-    f_q[i].pack(anchor="w")
+lblfrm2 = LabelFrame(frm1, text="2번")
+lblfrm2.pack(pady=5, fill="x")
+rd_btn3 = Radiobutton(lblfrm2, text=t_category[1], variable=rd_btn2_var, value=1)
+rd_btn3.pack(anchor="w")
+rd_btn4 = Radiobutton(lblfrm2, text=f_category[1], variable=rd_btn2_var, value=2)
+rd_btn4.pack(anchor="w")
 
- 
+lblfrm3 = LabelFrame(frm1, text="3번")
+lblfrm3.pack(pady=5, fill="x")
+rd_btn5 = Radiobutton(lblfrm3, text=t_category[2], variable=rd_btn3_var, value=1)
+rd_btn5.pack(anchor="w")
+rd_btn6 = Radiobutton(lblfrm3, text=f_category[2], variable=rd_btn3_var, value=2)
+rd_btn6.pack(anchor="w")
+
+btn = Button(window, text="확인", command=result)
+btn.pack()
+
+lbl_var = StringVar()
+lbl_var.set("Result : ")
+lbl = Label(window, textvariable = lbl_var, font=("Arial", 14, "bold"))
+lbl.pack()
 
 window.mainloop()
