@@ -1,4 +1,4 @@
-'''
+```C
 #include<stdio.h>
 char player = 'X', computer='O';
 char b[3][3]={	 {'1','2','3'},
@@ -37,4 +37,4 @@ int main() {
 		board();
 	return 0;
 }
-'''
+```
